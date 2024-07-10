@@ -56,6 +56,7 @@ RUN cd /tmp && git clone https://github.com/kpu/kenlm.git && \
     -DCMAKE_INSTALL_PREFIX=/opt/kenlm \
     -DCMAKE_POSITION_INDEPENDENT_CODE=ON && \
     make install -j$(nproc)
+ENV KENLM_ROOT=/opt/kenlm
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive $APT_INSTALL \
@@ -63,6 +64,9 @@ RUN apt-get update && \
     emacs \
     nano \
     htop \
+    curl \ 
+    mc \
+    zsh \
     # nccl: for flashlight
     libnccl2 libnccl-dev \
     # libsndfile
@@ -108,9 +112,7 @@ RUN git clone https://github.com/USCiLab/cereal && \
     mkdir -p build && cd build && \
     cmake .. && make install -j8 
 
-ENV KENLM_ROOT=/opt/kenlmn
-ENV MKLROOT=/opt/intel/mkl
-
+#ENV MKL_ROOT=/opt/intel/oneapi/mkl/latest
 
 # ==================================================================
 # flashlight with CUDA backend
@@ -140,3 +142,9 @@ RUN . /opt/intel/oneapi/setvars.sh &&\
 RUN . /opt/intel/oneapi/setvars.sh && \
     cd /flashlight/build && \
     make install
+    
+RUN echo "source /opt/intel/oneapi/setvars.sh" > /root/.zshrc 
+RUN echo "source /opt/intel/oneapi/setvars.sh" > /root/.bashrc 
+# Install Oh My Zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
