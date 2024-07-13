@@ -157,7 +157,8 @@ RUN . /opt/intel/oneapi/setvars.sh && cd /flashlight && mkdir -p build && \
 # ==================================================================
 # Change Bashrc and Installing zsh
 # ------------------------------------------------------------------
+RUN sh -c "$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
 RUN echo "\nsource /opt/intel/oneapi/setvars.sh\n" >> /root/.bashrc 
-RUN echo "\nif test -t 1; then exec zsh; fi\n" >> /root/.bashrc
+# RUN echo "\nif test -t 1; then exec zsh; fi\n" >> /root/.bashrc
 # Install Oh My Zsh
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
