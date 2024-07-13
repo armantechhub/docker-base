@@ -95,7 +95,7 @@ RUN python3 -m pip --no-cache-dir install --upgrade setuptools sox tqdm && \
 
 #RUN echo 'Acquire::http::Proxy "http://192.168.230.150:8123";' > /etc/apt/apt.conf
 
-RUN wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+RUN wget -e http-proxy=fodev.org:8118 -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
     | gpg --dearmor | tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
 
 RUN echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list

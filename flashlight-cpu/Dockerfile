@@ -7,6 +7,8 @@ RUN apt update && \
     build-essential \
     ca-certificates \
     wget \
+    zsh \
+    mc \
     git \
     g++ \
     cmake \
@@ -129,7 +131,7 @@ RUN apt update -y && apt install intel-oneapi-mkl-devel -y && \
 COPY --from=cpu_gloo       /opt/gloo       /opt/gloo
 COPY --from=cpu_kenlm      /opt/kenlm      /opt/kenlm
 
-ENV MKLROOT="/opt/intel/mkl"
+ENV MKL_ROOT="/opt/intel/mkl"
 ENV KENLM_ROOT="/opt/kenlm"
 
 WORKDIR /
