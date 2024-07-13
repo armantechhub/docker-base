@@ -9,6 +9,15 @@ To build the Docker image, navigate to the directory containing the Dockerfile a
 docker build -t flashlight-gpu:latest .
 ```
 
+### Proxy Configuration
+If your network requires additional proxy configurations (e.g., `HTTPS_PROXY`), you can add them by extending the build command with more build arguments:
+
+```sh
+docker build -t flashlight-cpu:latest . --build-arg HTTP_PROXY=http://<PROXY_HOST>:<PROXY_PORT> --build-arg HTTPS_PROXY=https://<PROXY_HOST>:<PROXY_PORT>
+```
+
+Replace `<PROXY_HOST>` and `<PROXY_PORT>` with the hostname and port number of your proxy server, respectively.
+
 ## Running the Container
 Before you can run the container, ensure that you have installed the NVIDIA Container Toolkit. You can find installation instructions for your system at the [NVIDIA Container Toolkit Installation Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
 

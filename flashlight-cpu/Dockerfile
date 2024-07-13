@@ -112,7 +112,7 @@ RUN apt clean && \
 # ==================================================================
 # MKL https://software.intel.com/en-us/mkl
 # ------------------------------------------------------------------
-RUN wget -e http-proxy=192.168.230.150:8123 -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+RUN wget -O- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
     | gpg --dearmor | tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
 
 RUN echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" | tee /etc/apt/sources.list.d/oneAPI.list
@@ -151,3 +151,11 @@ RUN . /opt/intel/oneapi/setvars.sh && cd /flashlight && mkdir -p build && \
     -DFL_BACKEND=OPENCL \
     -DGloo_DIR=/opt/gloo/share/cmake &&\
     make install -j$(nproc)
+
+# ==================================================================
+# Change Bashrc and Installing zsh
+# ------------------------------------------------------------------
+RUN echo "\nsource /opt/intel/oneapi/setvars.sh\n" >> /root/.bashrc 
+RUN echo "\nif test -t 1; then exec zsh; fi\n" >> /root/.bashrc
+# Install Oh My Zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
