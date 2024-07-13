@@ -143,8 +143,7 @@ RUN . /opt/intel/oneapi/setvars.sh && \
     cd /flashlight/build && \
     make install
     
-RUN echo "source /opt/intel/oneapi/setvars.sh" > /root/.zshrc 
-RUN echo "source /opt/intel/oneapi/setvars.sh" > /root/.bashrc 
+RUN echo "\nsource /opt/intel/oneapi/setvars.sh\n" >> /root/.bashrc 
 # Install Oh My Zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
+RUN echo "\nif test -t 1; then exec zsh; fi\n" >> /root/.bashrc
